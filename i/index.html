@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!-- Chad v0.1 -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CHAD v0.1</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="dist/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="dist/css/ionicons.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. -->
+  <link rel="stylesheet" href="dist/css/skins/skin-black-light.min.css">
+  <!-- App css -->
+  <link rel="stylesheet" href="app.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="hold-transition skin-black-light sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>C</b>HAD</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>CNC</b> Hi-Accuracy Disassembler</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="sidebar-status">
+          <!-- Status -->
+          <p>Worker <span class="label label-danger pull-right" id="wStatus">Offline</span></p>
+          <p>GRBL <span class="label label-default pull-right" id="mStatus">Select Port</span></p>
+      </div>
+
+      <!-- search form (Optional) -->
+      <div class="sidebar-select">
+          <select id="choosePort" class="form-control">
+			<option val="no">Select a serial port</option>
+			</select>
+      </div>
+      <!-- /.search form -->
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+      
+        <li class="header">MODE</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li class="active"><a href="#"><i class="fa fa-magic"></i> <span>Automatic Control</span></a></li>
+        <li><a href="dashboard.html"><i class="fa fa-cog"></i> <span>Manual Control</span></a></li>
+
+        <li class="header">ACTIONS</li>
+        <li><a href="#" id="sendReset"><i class="fa fa-eraser"></i> <span>RESET (ctrl-x)</span></a></li>
+        <li><a href="#" id="sendGrblHelp"><i class="fa fa-question"></i> <span>Help ($)</span></a></li>
+        <li><a href="#" id="sendGrblSettings"><i class="fa fa-cogs"></i> <span>Settings ($$)</span></a></li>
+      
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        CNC High Accuracy Disassembler (CHAD)
+        <small>Automatic Control</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active">Automatic Control</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    	
+    	<div class="row">
+    		<div class="col-md-4">
+    		
+    		<!-- CHAD Controls -->
+    		<div class="box box-default">
+    			<div class="box-header with-border">
+    				<h3 class="box-title">CHAD Controls</h3>
+    			</div>
+    			
+    			<div class="box-body">
+    				<button type="button" class="btn btn-block btn-default" id="goHome">Move to (0,0,0)</button>
+					<button type="button" class="btn btn-block btn-default" id="startChad">Start CHAD</button>
+    			</div>
+    		</div>
+    		
+          	<!-- Position -->
+          	<div class="nav-tabs-custom">
+            	<ul class="nav nav-tabs">
+              	<li id="wpA" class="active"><a href="#wPosition" data-toggle="tab" aria-expanded="true">Working Position</a></li>
+              	<li id="mpA" class=""><a href="#mPosition" data-toggle="tab" aria-expanded="false">Machine Position</a></li>
+            	</ul>
+            	<div class="tab-content">
+              <div class="tab-pane" id="mPosition">
+				<center>
+					<div id="mX" class="coordinate-display">X: 0.000</div>
+					<div id="mY" class="coordinate-display">Y: 0.000</div>
+					<div id="mZ" class="coordinate-display">Z: 0.000</div>
+				</center>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane active" id="wPosition">
+                <center>
+					<div id="wX" class="coordinate-display">X: 0.000</div>
+					<div id="wY" class="coordinate-display">Y: 0.000</div>
+					<div id="wZ" class="coordinate-display">Z: 0.000</div>
+				</center>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            	<!-- /.tab-content -->
+          	</div>
+          	<!-- /.nav-tabs-custom -->
+          
+          <!-- Jogging -->
+          <div class="box box-default">
+          	<div class="box-header with-border">
+          		<h3 class="box-title">Jogging</h3>
+          	</div><!-- /.box-header -->
+          	
+          	<div class="box-body">
+          		<table class="table text-center borderless">
+          			<tbody>
+          				<tr>
+          					<td></td>
+          					<td><button class="btn btn-primary btn-block" id="zP"><i class="fa fa-arrow-up"></i></button></td>
+          					<td></td>
+          				</tr>
+          				<tr>
+          					<td></td>
+          					<td><button class="btn btn-default btn-block" id="yP"><i class="fa fa-arrow-up"></i></button></td>
+          					<td></td>
+          				</tr>
+          				<tr>
+          					<td><button class="btn btn-default btn-block" id="xM"><i class="fa fa-arrow-left"></i></button></td>
+          					<td></td>
+          					<td><button class="btn btn-default btn-block" id="xP"><i class="fa fa-arrow-right"></i></button></td>
+          				</tr>
+          				<tr>
+          					<td></td>
+          					<td><button class="btn btn-default btn-block" id="yM"><i class="fa fa-arrow-down"></i></button></td>
+          					<td></td>
+          				</tr>
+          				<tr>
+          					<td></td>
+          					<td><button class="btn btn-primary btn-block" id="zM"><i class="fa fa-arrow-down"></i></button></td>
+          					<td></td>
+          				</tr>
+          			</tbody>
+          		</table>
+          	</div><!-- /.box-body -->
+          	
+          	<div class="box-footer">
+          	<div class="form-group">
+          		<select class="form-control" id="jogSpeed">
+					<option value="1500">Feed Rate: 1500</option>
+					<option selected value="1000">Feed Rate: 1000</option>
+					<option value="500">Feed Rate: 500</option>
+					<option value="100">Feed Rate: 100</option>
+					<option value="5">Feed Rate: 5</option>
+				</select>
+			</div>
+			<div>
+				<select class="form-control" id="jogSize">
+					<option value=".5">Distance: .1</option>
+					<option value=".5">Distance: .5</option>
+					<option value="1">Distance: 1</option>
+					<option value="2">Distance: 2</option>
+					<option selected value="5">Distance: 5</option>
+					<option value="10">Distance: 10</option>
+					<option value="20">Distance: 20</option>
+				</select>
+			</div>
+          	</div>
+          	
+          </div>
+          
+        </div>
+
+    		<div class="col-md-8">
+    			
+    			<ul class="timeline" id="timeline">
+    				Loading...
+				</ul>
+                <!--
+                <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+            -->
+
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">Console</h3>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+						<pre id="console"></pre>
+					</div><!-- /.box-body -->
+				</div><!-- /.box -->
+
+    		</div>
+
+    		
+    		
+    	
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Chad v0.1
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2017 <a href="#">EJL</a>.</strong> All rights reserved.
+  </footer>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- SocketIO -->
+<script src="/socket.io/socket.io.js"></script>
+<!-- Application JS -->
+<script src="main.js"></script>
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+</body>
+</html>
